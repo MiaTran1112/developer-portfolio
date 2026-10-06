@@ -251,7 +251,7 @@ export const skillsImage = (skill) => {
       return canva;
     case 'pandas':
       return pandas;
-    case 'sklearn':
+    case 'scikit-learn':
       return scikitlearn;
     case '.net':
       return dotnet;

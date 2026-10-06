@@ -11,7 +11,6 @@ export const skillsData = [
   'Airflow',
   'Git',
   'DBeaver',
-  'ClickHouse',
   'pandas',
   'scikit-learn',
   'Tensorflow',
