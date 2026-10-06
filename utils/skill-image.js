@@ -83,6 +83,17 @@ import linux from '../app/assets/svg/skills/linux.svg'
 import sqlalchemy from '../app/assets/svg/skills/sqlalchemy.svg'
 import fastapi from '../app/assets/svg/skills/fastapi.svg'
 
+import r from '../app/assets/svg/skills/r.svg'
+import fivetran from '../app/assets/svg/skills/fivetran.svg'
+import tableau from '../app/assets/svg/skills/tableau.svg'
+import powerbi from '../app/assets/svg/skills/powerbi.svg'
+import sqlserver from '../app/assets/svg/skills/sqlserver.svg'
+import airflow from '../app/assets/svg/skills/airflow.svg'
+import dbt from '../app/assets/svg/skills/dbt.svg'
+import snowflake from '../app/assets/svg/skills/snowflake.svg'
+import excel from '../app/assets/svg/skills/excel.svg'
+import jupyternotebook from '../app/assets/svg/skills/jupyternotebook.svg'
+import dbeaver from '../app/assets/svg/skills/dbeaver.svg'
 
 
 export const skillsImage = (skill) => {
@@ -254,6 +265,28 @@ export const skillsImage = (skill) => {
       return sqlalchemy;
     case 'fastapi':
       return fastapi;
+    case 'r':
+      return r;
+    case 'fivetran':
+      return fivetran;
+    case 'tableau':
+      return tableau;
+    case 'power bi':
+      return powerbi;
+    case 'sqlserver':
+      return sqlserver;
+    case 'airflow':
+      return airflow;
+    case 'dbt':
+      return dbt;
+    case 'snowflake':
+      return snowflake;
+    case 'excel':
+      return excel;
+    case 'jupyter notebook':
+      return jupyternotebook;
+    case 'dbeaver':
+      return dbeaver;
     default:
       break;
   }
