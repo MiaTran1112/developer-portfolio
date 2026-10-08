@@ -41,8 +41,8 @@ export const projectsData = [
         description: 'Root-cause analysis of insurance complaint dissatisfaction and processing bottlenecks — star-schema ETL, 10 data-driven questions, and quantified recommendations to improve customer satisfaction.',
         tools: ['Python', 'pandas', 'matplotlib', 'seaborn'],
         code: '',
-        demo: '',
-        role: 'https://github.com/MiaTran1112/insurance_customer_complaints',
+        demo: 'https://github.com/MiaTran1112/insurance_customer_complaints',
+        role: '',
     },
     {
         id: 6,

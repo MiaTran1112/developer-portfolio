@@ -1,8 +1,10 @@
 // @flow strict
 
 import * as React from 'react';
+import { FaGithub } from 'react-icons/fa';
 
 function ProjectCard({ project }) {
+  const projectUrl = project.code || project.demo;
 
   return (
     <div className="from-[#0d1224] border-[#1b2c68a0] relative rounded-lg border bg-gradient-to-r to-[#0a0d37] w-full">
@@ -17,7 +19,11 @@ function ProjectCard({ project }) {
           <div className="h-2 w-2 lg:h-3 lg:w-3 rounded-full bg-green-200"></div>
         </div>
         <p className="text-center ml-3 text-[#16f2b3] text-base lg:text-xl">
-          {project.name}
+          {projectUrl ? (
+            <a href={projectUrl} target="_blank" rel="noopener noreferrer" className="hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4">
+              {project.name}
+            </a>
+          ) : project.name}
         </p>
       </div>
       <div className="overflow-hidden border-t-[2px] border-indigo-900 px-4 lg:px-8 py-4 lg:py-8">
@@ -63,6 +69,20 @@ function ProjectCard({ project }) {
           </div>
           <div><span className="text-gray-400">{`};`}</span></div>
         </code>
+        {projectUrl && (
+          <div className="mt-6">
+            <a
+              href={projectUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View ${project.name} on GitHub (opens in a new tab)`}
+              className="inline-flex items-center gap-2 rounded-lg border border-[#16f2b3] px-4 py-2 text-sm font-medium text-[#16f2b3] transition-colors hover:bg-[#16f2b3] hover:text-[#0d1224] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+            >
+              <FaGithub aria-hidden="true" />
+              View on GitHub
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );
