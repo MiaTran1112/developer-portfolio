@@ -1,22 +1,12 @@
-export const skillsData = [
-  'Python',
-  'MySQL',
-  'R',
-  'Tableau',
-  'Power BI',
-  'Excel',
-  'Snowflake',
-  'dbt',
-  'fivetran',
-  'Airflow',
-  'Git',
-  'DBeaver',
-  'pandas',
-  'scikit-learn',
-  'Tensorflow',
-  'Numpy',
-  'Jupyter Notebook'
+export const skillGroups = [
+  { category: 'Languages & Querying', skills: ['Python', 'MySQL', 'R'] },
+  { category: 'Data Engineering', skills: ['Snowflake', 'dbt', 'Fivetran', 'Airflow'] },
+  { category: 'BI & Visualization', skills: ['Tableau', 'Power BI', 'Excel'] },
+  { category: 'ML & Analysis', skills: ['pandas', 'NumPy', 'scikit-learn', 'TensorFlow'] },
+  { category: 'Tooling', skills: ['Git', 'DBeaver', 'Jupyter Notebook'] },
 ]
+
+export const skillsData = skillGroups.flatMap(group => group.skills)
 
 // Choose your skills from below. Make sure it's in the same format and spelled correctly.
 // Couldn't find the required skills? Raise an issue on github at https://github.com/hhhrrrttt222111/developer-portfolio/issues/new

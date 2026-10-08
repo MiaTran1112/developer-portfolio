@@ -6,6 +6,9 @@ import { useState } from "react";
 import { TbMailForward } from "react-icons/tb";
 import { toast } from "react-toastify";
 
+const INPUT_CLS =
+  "w-full rounded-lg border border-line bg-canvas px-3 py-2 text-ink outline-0 ring-0 transition-colors duration-300 focus:border-accent";
+
 function ContactForm() {
   const [error, setError] = useState({ email: false, required: false });
   const [isLoading, setIsLoading] = useState(false);
@@ -51,77 +54,80 @@ function ContactForm() {
   };
 
   return (
-    <div>
-      <p className="font-medium mb-5 text-[#a52b65] text-xl uppercase">Contact with me</p>
-      <div className="max-w-3xl text-[#542b42] rounded-lg border border-[#e4aac2] p-3 lg:p-5">
-        <p className="text-sm text-[#65505c]">{"If you have any questions or concerns, please don't hesitate to contact me. I am open to any work opportunities that align with my skills and interests."}</p>
-        <div className="mt-6 flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <label className="text-base">Your Name: </label>
-            <input
-              className="bg-[#fff7fb] w-full border rounded-md border-[#e4aac2] focus:border-[#a52b65] ring-0 outline-0 transition-all duration-300 px-3 py-2"
-              type="text"
-              maxLength="100"
-              required={true}
-              onChange={(e) => setUserInput({ ...userInput, name: e.target.value })}
-              onBlur={checkRequired}
-              value={userInput.name}
-            />
-          </div>
+    <form onSubmit={handleSendMail} noValidate className="flex flex-col gap-4">
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="contact-name" className="text-sm font-medium text-ink">Your name</label>
+          <input
+            id="contact-name"
+            name="name"
+            autoComplete="name"
+            className={INPUT_CLS}
+            type="text"
+            maxLength="100"
+            required={true}
+            onChange={(e) => setUserInput({ ...userInput, name: e.target.value })}
+            onBlur={checkRequired}
+            value={userInput.name}
+          />
+        </div>
 
-          <div className="flex flex-col gap-2">
-            <label className="text-base">Your Email: </label>
-            <input
-              className="bg-[#fff7fb] w-full border rounded-md border-[#e4aac2] focus:border-[#a52b65] ring-0 outline-0 transition-all duration-300 px-3 py-2"
-              type="email"
-              maxLength="100"
-              required={true}
-              value={userInput.email}
-              onChange={(e) => setUserInput({ ...userInput, email: e.target.value })}
-              onBlur={() => {
-                checkRequired();
-                setError({ ...error, email: !isValidEmail(userInput.email) });
-              }}
-            />
-            {error.email && <p className="text-sm text-red-400">Please provide a valid email!</p>}
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <label className="text-base">Your Message: </label>
-            <textarea
-              className="bg-[#fff7fb] w-full border rounded-md border-[#e4aac2] focus:border-[#a52b65] ring-0 outline-0 transition-all duration-300 px-3 py-2"
-              maxLength="500"
-              name="message"
-              required={true}
-              onChange={(e) => setUserInput({ ...userInput, message: e.target.value })}
-              onBlur={checkRequired}
-              rows="4"
-              value={userInput.message}
-            />
-          </div>
-          <div className="flex flex-col items-center gap-3">
-            {error.required && <p className="text-sm text-red-400">
-              All fiels are required!
-            </p>}
-            <button
-              className="flex items-center gap-1 hover:gap-3 rounded-full bg-gradient-to-r from-pink-700 to-rose-700 px-5 md:px-12 py-2.5 md:py-3 text-center text-xs md:text-sm font-medium uppercase tracking-wider text-white no-underline transition-all duration-200 ease-out hover:text-white hover:no-underline md:font-semibold"
-              role="button"
-              onClick={handleSendMail}
-              disabled={isLoading}
-            >
-              {
-                isLoading ?
-                <span>Sending Message...</span>:
-                <span className="flex items-center gap-1">
-                  Send Message
-                  <TbMailForward size={20} />
-                </span>
-              }
-            </button>
-          </div>
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="contact-email" className="text-sm font-medium text-ink">Your email</label>
+          <input
+            id="contact-email"
+            name="email"
+            autoComplete="email"
+            className={INPUT_CLS}
+            type="email"
+            maxLength="100"
+            required={true}
+            value={userInput.email}
+            onChange={(e) => setUserInput({ ...userInput, email: e.target.value })}
+            onBlur={() => {
+              checkRequired();
+              setError({ ...error, email: !isValidEmail(userInput.email) });
+            }}
+          />
+          {error.email && <p className="text-sm text-red-700">Please provide a valid email!</p>}
         </div>
       </div>
-    </div>
+
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor="contact-message" className="text-sm font-medium text-ink">Your message</label>
+        <textarea
+          id="contact-message"
+          className={INPUT_CLS}
+          maxLength="500"
+          name="message"
+          required={true}
+          onChange={(e) => setUserInput({ ...userInput, message: e.target.value })}
+          onBlur={checkRequired}
+          rows="4"
+          value={userInput.message}
+        />
+      </div>
+
+      <div className="flex flex-wrap items-center justify-end gap-3">
+        {error.required && <p className="mr-auto text-sm text-red-700">
+          All fields are required!
+        </p>}
+        <button
+          type="submit"
+          className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-white shadow-md shadow-accent/20 transition-colors hover:bg-accent-strong disabled:cursor-not-allowed disabled:opacity-70"
+          disabled={isLoading}
+        >
+          {
+            isLoading ?
+            <span>Sending Message...</span>:
+            <>
+              Send Message
+              <TbMailForward size={18} aria-hidden="true" />
+            </>
+          }
+        </button>
+      </div>
+    </form>
   );
 };
 

@@ -7,121 +7,70 @@ import { FaFacebook, FaStackOverflow } from 'react-icons/fa';
 import { FaXTwitter } from "react-icons/fa6";
 import { IoLogoGithub, IoMdCall } from "react-icons/io";
 import { MdAlternateEmail } from "react-icons/md";
+import SectionHeading from '../../helper/section-heading';
 import ContactForm from './contact-form';
+
+const formatPhone = (phone) => phone.replace(/^(\d{3})(\d{3})(\d{4})$/, '($1) $2-$3');
+
+const CONTACT_ROWS = [
+  { Icon: MdAlternateEmail, label: personalData.email, href: `mailto:${personalData.email}` },
+  { Icon: IoMdCall, label: formatPhone(personalData.phone), href: `tel:${personalData.phone}` },
+  { Icon: CiLocationOn, label: personalData.address },
+];
+
+const SOCIALS = [
+  { href: personalData.github, label: 'GitHub', Icon: IoLogoGithub },
+  { href: personalData.linkedIn, label: 'LinkedIn', Icon: BiLogoLinkedin },
+  { href: personalData.twitter, label: 'Twitter', Icon: FaXTwitter },
+  { href: personalData.stackOverflow, label: 'Stack Overflow', Icon: FaStackOverflow },
+  { href: personalData.facebook, label: 'Facebook', Icon: FaFacebook },
+].filter(social => social.href);
 
 function ContactSection() {
   return (
-    <div id="contact" className="my-12 lg:my-16 relative mt-24 text-[#542b42]">
-      <div className="hidden lg:flex flex-col items-center absolute top-24 -right-8">
-        <span className="bg-[#ffd1dc] w-fit text-[#542b42] rotate-90 p-2 px-5 text-xl rounded-md">
-          CONTACT
-        </span>
-        <span className="h-36 w-[2px] bg-[#ffd1dc]"></span>
-      </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-        <ContactForm />
-        <div className="lg:w-3/4 ">
-          <div className="flex flex-col gap-5 lg:gap-9">
-            <p className="text-sm md:text-xl flex items-center gap-3">
-              <MdAlternateEmail
-                className="bg-[#ffd1dc] p-2 rounded-full hover:bg-[#a52b65] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
-                size={36}
-              />
-              <span>{personalData.email}</span>
-            </p>
-            <p className="text-sm md:text-xl flex items-center gap-3">
-              <IoMdCall
-                className="bg-[#ffd1dc] p-2 rounded-full hover:bg-[#a52b65] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
-                size={36}
-              />
-              <span>
-                {personalData.phone}
-              </span>
-            </p>
-            <p className="text-sm md:text-xl flex items-center gap-3">
-              <CiLocationOn
-                className="bg-[#ffd1dc] p-2 rounded-full hover:bg-[#a52b65] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
-                size={36}
-              />
-              <span>
-                {personalData.address}
-              </span>
-            </p>
-          </div>
-          <div className="mt-8 lg:mt-16 flex items-center gap-5 lg:gap-10">
-            {personalData.github && (
-              <Link
-                href={personalData.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-              >
-                <IoLogoGithub
-                  className="bg-[#ffd1dc] p-3 rounded-full hover:bg-[#a52b65] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
-                  size={48}
-                />
-              </Link>
-            )}
+    <section id="contact" className="py-8 md:py-10">
+      <SectionHeading index="05" eyebrow="Contact" title="Let’s connect" />
 
-            {personalData.linkedIn && (
-              <Link
-                href={personalData.linkedIn}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-              >
-                <BiLogoLinkedin
-                  className="bg-[#ffd1dc] p-3 rounded-full hover:bg-[#a52b65] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
-                  size={48}
-                />
-              </Link>
-            )}
+      <div className="grid gap-6 rounded-2xl border border-line bg-surface/90 p-5 shadow-[0_20px_50px_-30px_#d889aa] md:p-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-10">
+        <div className="flex flex-col">
+          <p className="max-w-md leading-relaxed text-body">
+            {"If you have any questions or concerns, please don't hesitate to contact me. I am open to any work opportunities that align with my skills and interests."}
+          </p>
 
-            {personalData.twitter && (
-              <Link
-                href={personalData.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Twitter"
-              >
-                <FaXTwitter
-                  className="bg-[#ffd1dc] p-3 rounded-full hover:bg-[#a52b65] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
-                  size={48}
-                />
-              </Link>
-            )}
+          <ul className="mt-6 flex flex-col gap-3">
+            {CONTACT_ROWS.map(({ Icon, label, href }) => (
+              <li key={label} className="flex items-center gap-3 text-sm md:text-base">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blush text-accent">
+                  <Icon size={18} aria-hidden="true" />
+                </span>
+                {href ? (
+                  <a href={href} className="break-all text-ink hover:text-accent hover:underline">{label}</a>
+                ) : (
+                  <span className="text-ink">{label}</span>
+                )}
+              </li>
+            ))}
+          </ul>
 
-            {personalData.stackOverflow && (
+          <div className="mt-6 flex items-center gap-2 lg:mt-auto lg:pt-6">
+            {SOCIALS.map(({ href, label, Icon }) => (
               <Link
-                href={personalData.stackOverflow}
+                key={label}
+                href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Stack Overflow"
+                aria-label={label}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-line bg-canvas text-ink transition-colors hover:border-accent hover:bg-accent hover:text-white"
               >
-                <FaStackOverflow
-                  className="bg-[#ffd1dc] p-3 rounded-full hover:bg-[#a52b65] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
-                  size={48}
-                />
+                <Icon size={20} aria-hidden="true" />
               </Link>
-            )}
-
-            {personalData.facebook && (
-              <Link
-                href={personalData.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook"
-              >
-                <FaFacebook
-                  className="bg-[#ffd1dc] p-3 rounded-full hover:bg-[#a52b65] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
-                  size={48}
-                />
-              </Link>
-            )}
+            ))}
           </div>
         </div>
+
+        <ContactForm />
       </div>
-    </div>
+    </section>
   );
 };
 

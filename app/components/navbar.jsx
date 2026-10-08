@@ -1,40 +1,47 @@
 // @flow strict
+import { personalData } from "@/utils/data/personal-data";
 import Link from "next/link";
+import { MdDownload } from "react-icons/md";
 
+const NAV_LINKS = [
+  { href: "/#about", label: "About" },
+  { href: "/#experience", label: "Experience" },
+  { href: "/#skills", label: "Skills" },
+  { href: "/#projects", label: "Projects" },
+  { href: "/#contact", label: "Contact" },
+];
 
 function Navbar() {
   return (
-    <nav className="bg-transparent">
-      <div className="flex flex-wrap items-center justify-between gap-4 py-5">
-        <div className="flex flex-shrink-0 items-center">
-          <Link
-            href="/"
-            className=" text-[#a52b65] text-3xl font-bold">
-            MIA TRAN
-          </Link>
-        </div>
+    <header className="sticky top-0 z-50 border-b border-line/70 bg-canvas/80 backdrop-blur-md">
+      <nav className="mx-auto flex h-14 max-w-6xl items-center gap-4 px-4 sm:px-6 lg:px-8">
+        <Link href="/" className="shrink-0 text-lg font-bold tracking-tight text-accent">
+          MIA TRAN
+        </Link>
 
-        <ul className="flex w-full flex-wrap items-center gap-1 text-sm md:w-auto" id="navbar-default">
-          <li>
-            <Link className="block px-2 py-2 md:px-4 no-underline outline-none hover:no-underline" href="/#about">
-              <div className="text-sm text-[#542b42] transition-colors duration-300 hover:text-pink-600">ABOUT</div>
-            </Link>
-          </li>
-          <li>
-            <Link className="block px-2 py-2 md:px-4 no-underline outline-none hover:no-underline" href="/#experience"><div className="text-sm text-[#542b42] transition-colors duration-300 hover:text-pink-600">EXPERIENCE</div></Link>
-          </li>
-          <li>
-            <Link className="block px-2 py-2 md:px-4 no-underline outline-none hover:no-underline" href="/#skills"><div className="text-sm text-[#542b42] transition-colors duration-300 hover:text-pink-600">SKILLS</div></Link>
-          </li>
-          <li>
-            <Link className="block px-2 py-2 md:px-4 no-underline outline-none hover:no-underline" href="/#education"><div className="text-sm text-[#542b42] transition-colors duration-300 hover:text-pink-600">EDUCATION</div></Link>
-          </li>
-          <li>
-            <Link className="block px-2 py-2 md:px-4 no-underline outline-none hover:no-underline" href="/#projects"><div className="text-sm text-[#542b42] transition-colors duration-300 hover:text-pink-600">PROJECTS</div></Link>
-          </li>
+        <ul className="no-scrollbar ml-auto flex min-w-0 items-center overflow-x-auto text-sm max-sm:[mask-image:linear-gradient(to_right,#000_85%,transparent)]">
+          {NAV_LINKS.map(({ href, label }) => (
+            <li key={href}>
+              <Link
+                href={href}
+                className="block whitespace-nowrap rounded-md px-2.5 py-1.5 text-body transition-colors hover:bg-blush/60 hover:text-accent sm:px-3"
+              >
+                {label}
+              </Link>
+            </li>
+          ))}
         </ul>
-      </div>
-    </nav>
+
+        <Link
+          href={personalData.resume}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden shrink-0 items-center gap-1.5 rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-accent-strong md:inline-flex"
+        >
+          Resume <MdDownload size={16} aria-hidden="true" />
+        </Link>
+      </nav>
+    </header>
   );
 };
 

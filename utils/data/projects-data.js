@@ -37,7 +37,7 @@ export const projectsData = [
     },
     {
         id: 5,
-        name: 'insurance_customer_complaints',
+        name: 'Insurance Customer Complaints',
         description: 'Root-cause analysis of insurance complaint dissatisfaction and processing bottlenecks — star-schema ETL, 10 data-driven questions, and quantified recommendations to improve customer satisfaction.',
         tools: ['Python', 'pandas', 'matplotlib', 'seaborn'],
         code: '',

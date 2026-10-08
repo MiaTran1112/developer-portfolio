@@ -1,40 +1,38 @@
 // @flow strict
+import { personalData } from '@/utils/data/personal-data';
 import Link from 'next/link';
-import { CgGitFork } from "react-icons/cg";
-import { IoStar } from "react-icons/io5";
+import { BsGithub, BsLinkedin } from 'react-icons/bs';
+import { MdAlternateEmail } from 'react-icons/md';
+
+const SOCIALS = [
+  { href: personalData.github, label: 'GitHub', Icon: BsGithub },
+  { href: personalData.linkedIn, label: 'LinkedIn', Icon: BsLinkedin },
+  { href: `mailto:${personalData.email}`, label: 'Email', Icon: MdAlternateEmail },
+];
 
 function Footer() {
   return (
-    <div className="relative border-t bg-[#ffeff7] border-[#f7c6d9] text-[#542b42]">
-      <div className="mx-auto px-6 sm:px-12 lg:max-w-[70rem] xl:max-w-[76rem] 2xl:max-w-[92rem] py-6 lg:py-10">
-        <div className="flex justify-center -z-40">
-          <div className="absolute top-0 h-[1px] w-1/2  bg-gradient-to-r from-transparent via-pink-400 to-transparent"></div>
-        </div>
-        <div className="flex flex-col md:flex-row items-center justify-between">
-          <p className="text-sm">
-            © Developer Portfolio by <Link target="_blank" href="https://www.linkedin.com/in/miatran1207" className="text-[#a52b65]">Mia Tran</Link>
-          </p>
-          <div className="flex items-center gap-5">
+    <footer className="border-t border-line bg-canvas/60">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 py-6 text-sm text-muted sm:flex-row sm:px-6 lg:px-8">
+        <p>
+          © {new Date().getFullYear()} {personalData.name} · Data Analyst & Analytics Engineer
+        </p>
+        <div className="flex items-center gap-1">
+          {SOCIALS.map(({ href, label, Icon }) => (
             <Link
-              target="_blank"
-              href="https://github.com/MiaTran1112/developer-portfolio"
-              className="flex items-center gap-2 uppercase hover:text-[#a52b65]"
+              key={label}
+              href={href}
+              target={href.startsWith('mailto:') ? undefined : '_blank'}
+              rel="noopener noreferrer"
+              aria-label={label}
+              className="rounded-full p-2 text-ink transition-colors hover:bg-blush/60 hover:text-accent"
             >
-              <IoStar />
-              <span>Star</span>
+              <Icon size={18} aria-hidden="true" />
             </Link>
-            <Link
-              target="_blank"
-              href="https://github.com/MiaTran1112/developer-portfolio/fork"
-              className="flex items-center gap-2 uppercase hover:text-[#a52b65]"
-            >
-              <CgGitFork />
-              <span>Fork</span>
-            </Link>
-          </div>
+          ))}
         </div>
       </div>
-    </div >
+    </footer>
   );
 };
 

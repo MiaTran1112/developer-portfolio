@@ -1,90 +1,60 @@
 // @flow strict
 
-import * as React from 'react';
 import { FaGithub } from 'react-icons/fa';
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, index }) {
   const projectUrl = project.code || project.demo;
 
   return (
-    <div className="from-[#ffeff7] border-[#f7c6d9] relative rounded-lg border bg-gradient-to-r to-[#fff7fb] w-full">
-      <div className="flex flex-row">
-        <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-pink-500 to-rose-600"></div>
-        <div className="h-[1px] w-full bg-gradient-to-r from-rose-600 to-transparent"></div>
+    <article className="group relative flex flex-col overflow-hidden rounded-2xl border border-line bg-surface/90 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_18px_40px_-22px_#d889aa] focus-within:border-accent/40">
+      <div className="flex items-center gap-1.5 border-b border-line bg-blush/40 px-4 py-2.5">
+        <span className="h-2.5 w-2.5 rounded-full bg-[#f7a8b8]" />
+        <span className="h-2.5 w-2.5 rounded-full bg-[#f5c6ec]" />
+        <span className="h-2.5 w-2.5 rounded-full bg-[#ffb6c1]" />
+        <span className="ml-auto font-mono text-xs text-muted">
+          {String(index + 1).padStart(2, '0')}
+        </span>
       </div>
-      <div className="px-4 lg:px-8 py-3 lg:py-5 relative flex items-center gap-4">
-        <div className="flex shrink-0 flex-row space-x-1 lg:space-x-2">
-          <div className="h-2 w-2 lg:h-3 lg:w-3 rounded-full bg-red-400"></div>
-          <div className="h-2 w-2 lg:h-3 lg:w-3 rounded-full bg-rose-300"></div>
-          <div className="h-2 w-2 lg:h-3 lg:w-3 rounded-full bg-pink-200"></div>
-        </div>
-        <p className="text-center flex-1 text-[#a52b65] text-base lg:text-xl">
-          {projectUrl ? (
-            <a href={projectUrl} target="_blank" rel="noopener noreferrer" className="hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4">
-              {project.name}
-            </a>
-          ) : project.name}
-        </p>
-      </div>
-      <div className="overflow-hidden border-t-[2px] border-[#f7c6d9] px-4 lg:px-8 py-4 lg:py-8">
-        <code className="font-mono text-xs md:text-sm lg:text-base">
-          <div className="blink">
-            <span className="mr-2 text-[#a52b65]">const</span>
-            <span className="mr-2 text-[#542b42]">project</span>
-            <span className="mr-2 text-[#a52b65]">=</span>
-            <span className="text-[#806575]">{'{'}</span>
-          </div>
-          <div>
-            <span className="ml-4 lg:ml-8 mr-2 text-[#542b42]">name:</span>
-            <span className="text-[#806575]">{`'`}</span>
-            <span className="text-[#984c70]">{project.name}</span>
-            <span className="text-[#806575]">{`',`}</span>
-          </div>
 
-          <div className="ml-4 lg:ml-8 mr-2">
-            <span className=" text-[#542b42]">tools:</span>
-            <span className="text-[#806575]">{` ['`}</span>
-            {
-              project.tools.map((tag, i) => (
-                <React.Fragment key={i}>
-                  <span className="text-[#984c70]">{tag}</span>
-                  {
-                    project.tools?.length - 1 !== i &&
-                    <span className="text-[#806575]">{`', '`}</span>
-                  }
-                </React.Fragment>
-              ))
-            }
-            <span className="text-[#806575]">{"],"}</span>
-          </div>
-          <div>
-            <span className="ml-4 lg:ml-8 mr-2 text-[#542b42]">myRole:</span>
-            <span className="text-[#a52b65]">{project.role}</span>
-            <span className="text-[#806575]">,</span>
-          </div>
-          <div className="ml-4 lg:ml-8 mr-2">
-            <span className="text-[#542b42]">Description:</span>
-            <span className="text-[#75496f]">{' ' + project.description}</span>
-            <span className="text-[#806575]">,</span>
-          </div>
-          <div><span className="text-[#806575]">{`};`}</span></div>
-        </code>
-        {projectUrl && (
-          <div className="mt-6">
+      <div className="flex flex-1 flex-col p-4 md:p-5">
+        <h3 className="text-lg font-semibold leading-snug text-ink">
+          {projectUrl ? (
+            // Stretched link: the whole card is clickable
             <a
               href={projectUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`View ${project.name} on GitHub (opens in a new tab)`}
-              className="inline-flex items-center gap-2 rounded-lg border border-[#a52b65] px-4 py-2 text-sm font-medium text-[#a52b65] transition-colors hover:bg-[#a52b65] hover:text-[#ffeff7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+              className="after:absolute after:inset-0 group-hover:text-accent"
             >
-              <FaGithub aria-hidden="true" />
-              View on GitHub
+              {project.name}
+              <span className="sr-only"> (opens GitHub in a new tab)</span>
             </a>
-          </div>
+          ) : project.name}
+        </h3>
+        {project.role && (
+          <p className="mt-1 font-mono text-xs text-accent">{project.role}</p>
+        )}
+        <p className="mt-2 text-sm leading-relaxed text-body">
+          {project.description}
+        </p>
+
+        <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Tools">
+          {project.tools.map(tool => (
+            <li key={tool} className="rounded-full bg-blush/50 px-2.5 py-0.5 text-xs font-medium text-[#793d59]">
+              {tool}
+            </li>
+          ))}
+        </ul>
+
+        {projectUrl && (
+          <p className="mt-auto flex items-center gap-2 pt-4 text-sm font-medium text-accent" aria-hidden="true">
+            <FaGithub />
+            View on GitHub
+            <span className="transition-transform group-hover:translate-x-1">→</span>
+          </p>
         )}
       </div>
-    </div>
+    </article>
   );
 };
 

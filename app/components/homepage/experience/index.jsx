@@ -1,82 +1,55 @@
 // @flow strict
 
 import { experiences } from "@/utils/data/experience";
-import Image from "next/image";
-import { BsPersonWorkspace } from "react-icons/bs";
-import experience from '../../../assets/lottie/code.json';
-import AnimationLottie from "../../helper/animation-lottie";
-import GlowCard from "../../helper/glow-card";
+import SectionHeading from "../../helper/section-heading";
+import Education from "../education";
+import Highlights from "../highlights";
 
 function Experience() {
   return (
-    <div id="experience" className="relative z-50 border-t my-12 lg:my-24 border-[#f7c6d9]">
-      <Image
-        src="/section.svg"
-        alt="Hero"
-        width={1572}
-        height={795}
-        className="absolute top-0 -z-10"
-        priority
-      />
+    <section id="experience" className="py-8 md:py-10">
+      <SectionHeading index="02" eyebrow="Background" title="Experience & Education" />
 
-      <div className="flex justify-center my-5 lg:py-8">
-        <div className="flex  items-center">
-          <span className="w-24 h-[2px] bg-[#ffd1dc]"></span>
-          <span className="bg-[#ffd1dc] w-fit text-[#542b42] p-2 px-5 text-xl rounded-md">
-            Experiences
-          </span>
-          <span className="w-24 h-[2px] bg-[#ffd1dc]"></span>
-        </div>
-      </div>
+      <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-7">
+          <h3 className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-muted">Work</h3>
+          <ol className="rounded-2xl border border-line bg-surface/80 p-4 md:p-5">
+            {experiences.map((experience, index) => {
+              const isCurrent = experience.duration.includes("Present");
+              const isLast = index === experiences.length - 1;
 
-      <div className="py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
-          <div className="flex justify-center items-start">
-            <div className="w-full h-full">
-              <AnimationLottie animationPath={experience} />
-            </div>
-          </div>
-
-          <div>
-            <div className="flex flex-col gap-6">
-              {
-                experiences.map(experience => (
-                  <GlowCard key={experience.id} identifier={`experience-${experience.id}`}>
-                    <div className="p-3 relative">
-                      <Image
-                        src="/blur-23.svg"
-                        alt="Hero"
-                        width={1080}
-                        height={200}
-                        className="absolute bottom-0 opacity-80"
-                      />
-                      <div className="flex justify-center">
-                        <p className="text-xs sm:text-sm text-[#a52b65]">
-                          {experience.duration}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-x-8 px-3 py-5">
-                        <div className="text-pink-400  transition-all duration-300 hover:scale-125">
-                          <BsPersonWorkspace size={36} />
-                        </div>
-                        <div>
-                          <p className="text-base sm:text-xl mb-2 font-medium uppercase">
-                            {experience.title}
-                          </p>
-                          <p className="text-sm sm:text-base">
-                            {experience.company}
-                          </p>
-                        </div>
-                      </div>
+              return (
+                <li key={experience.id} className="relative pl-7">
+                  {!isLast && <span aria-hidden="true" className="absolute left-[5px] top-4 bottom-0 w-px bg-line" />}
+                  <span
+                    aria-hidden="true"
+                    className={`absolute left-0 top-1.5 h-[11px] w-[11px] rounded-full border-2 border-accent ${isCurrent ? "bg-accent" : "bg-surface"}`}
+                  />
+                  <div className={isLast ? "" : "pb-5"}>
+                    <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+                      <h4 className="font-semibold text-ink">{experience.title}</h4>
+                      <span className="font-mono text-xs text-muted">{experience.duration}</span>
                     </div>
-                  </GlowCard>
-                ))
-              }
-            </div>
-          </div>
+                    <p className="mt-0.5 flex items-center gap-2 text-sm text-body">
+                      {experience.company}
+                      {isCurrent && (
+                        <span className="rounded-full bg-blush px-2 py-0.5 text-[11px] font-medium text-accent">Current</span>
+                      )}
+                    </p>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+
+        <div className="lg:col-span-5">
+          <Education />
         </div>
       </div>
-    </div>
+
+      <Highlights />
+    </section>
   );
 };
 

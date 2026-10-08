@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+/* Design tokens — one pink palette, used as `text-ink`, `bg-surface`, `border-line`, … */
+@theme {
+  --color-canvas: #ffeff7;
+  --color-surface: #fff7fb;
+  --color-blush: #ffd1dc;
+  --color-line: #f7c6d9;
+  --color-ink: #542b42;
+  --color-body: #65505c;
+  --color-muted: #765466;
+  --color-accent: #a52b65;
+  --color-accent-strong: #84204f;
+}
+
+/* Fonts come from next/font variables set on <html> in app/layout.js */
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+:root {
+  color-scheme: light;
+}
+
+/* Sticky navbar is 3.5rem tall; keep anchor targets clear of it */
+html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
+
+body {
+  color: var(--color-ink);
+  background: radial-gradient(ellipse at 10% 0%, #ffd1dc80, transparent 40%),
+    radial-gradient(ellipse at 95% 20%, #f5c6ec55, transparent 35%), var(--color-canvas);
+}
+
+::selection { background: var(--color-blush); color: var(--color-ink); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: 6px; }
+input:focus-visible, textarea:focus-visible { box-shadow: 0 0 0 3px var(--color-line); }
+
+/* Subtle "graph paper" dots behind the hero, faded at the edges */
+.dot-grid {
+  background-image: radial-gradient(#e4aac2 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse at 30% 40%, #000 20%, transparent 70%);
+}
+
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

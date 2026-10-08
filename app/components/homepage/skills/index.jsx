@@ -1,71 +1,42 @@
 // @flow strict
 
-import { skillsData } from "@/utils/data/skills";
+import { skillGroups } from "@/utils/data/skills";
 import { skillsImage } from "@/utils/skill-image";
 import Image from "next/image";
-import Marquee from "react-fast-marquee";
+import SectionHeading from "../../helper/section-heading";
 
 function Skills() {
   return (
-    <div id="skills" className="relative z-50 border-t my-12 lg:my-24 border-[#f7c6d9]">
-      <div className="w-[100px] h-[100px] bg-pink-100 rounded-full absolute top-6 left-[42%] translate-x-1/2 filter blur-3xl  opacity-20"></div>
+    <section id="skills" className="py-8 md:py-10">
+      <SectionHeading index="03" eyebrow="Skills" title="Tools I work with" />
 
-      <div className="flex justify-center -translate-y-[1px]">
-        <div className="w-3/4">
-          <div className="h-[1px] bg-gradient-to-r from-transparent via-pink-400 to-transparent  w-full" />
-        </div>
+      <div className="divide-y divide-line rounded-2xl border border-line bg-surface/80">
+        {skillGroups.map(group => (
+          <div key={group.category} className="grid gap-3 px-4 py-4 md:grid-cols-[13rem_1fr] md:items-center md:px-5">
+            <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-muted">
+              {group.category}
+            </h3>
+            <ul className="flex flex-wrap gap-2">
+              {group.skills.map(skill => (
+                <li
+                  key={skill}
+                  className="inline-flex items-center gap-2 rounded-full border border-line bg-canvas px-3 py-1.5 text-sm text-ink transition-colors hover:border-accent/50 hover:bg-blush/40"
+                >
+                  <Image
+                    src={skillsImage(skill)?.src}
+                    alt=""
+                    width={18}
+                    height={18}
+                    className="h-[18px] w-[18px] object-contain"
+                  />
+                  {skill}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
-
-      <div className="flex justify-center my-5 lg:py-8">
-        <div className="flex  items-center">
-          <span className="w-24 h-[2px] bg-[#ffd1dc]"></span>
-          <span className="bg-[#ffd1dc] w-fit text-[#542b42] p-2 px-5 text-xl rounded-md">
-            Skills
-          </span>
-          <span className="w-24 h-[2px] bg-[#ffd1dc]"></span>
-        </div>
-      </div>
-
-      <div className="w-full my-12">
-        <Marquee
-          gradient={false}
-          speed={80}
-          pauseOnHover={true}
-          pauseOnClick={true}
-          delay={0}
-          play={true}
-          direction="left"
-        >
-          {skillsData.map((skill, id) => (
-            <div className="w-36 min-w-fit h-fit flex flex-col items-center justify-center transition-all duration-500 m-3 sm:m-5 rounded-lg group relative hover:scale-[1.15] cursor-pointer"
-              key={id}>
-              <div className="h-full w-full rounded-lg border border-[#f7c6d9] bg-[#fff7fb] shadow-none shadow-gray-50 group-hover:border-pink-400 transition-all duration-500">
-                <div className="flex -translate-y-[1px] justify-center">
-                  <div className="w-3/4">
-                    <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-pink-400 to-transparent" />
-                  </div>
-                </div>
-                <div className="flex flex-col items-center justify-center gap-3 p-6">
-                  <div className="h-8 sm:h-10">
-                    <Image
-                      src={skillsImage(skill)?.src}
-                      alt={skill}
-                      width={40}
-                      height={40}
-                      className="!h-full !w-auto rounded-lg"
-                      style={{ width: 'auto', height: 'auto' }}
-                    />
-                  </div>
-                  <p className="text-[#542b42] text-sm sm:text-lg">
-                    {skill}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </Marquee>
-      </div>
-    </div>
+    </section>
   );
 };
 
